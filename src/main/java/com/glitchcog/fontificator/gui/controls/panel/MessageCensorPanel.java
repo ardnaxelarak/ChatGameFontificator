@@ -213,6 +213,30 @@ public class MessageCensorPanel extends ControlPanelBase
     }
 
     /**
+     * Used to purge a specific message from chat when deleted by a Twitch moderator
+     * 
+     * @param messageId
+     */
+    public void purgeMessageId(String messageId)
+    {
+        if (!config.isCensorshipEnabled() || !config.isPurgeOnTwitchBan())
+        {
+            return;
+        }
+
+        for (Message msg : chat.getMessages())
+        {
+            if (messageId.equals(msg.getRawParam("id")))
+            {
+                msg.setCensoredReason("TWITCH CLEARMSG");
+                msg.setCensored(true, config.isCensorshipEnabled());
+                msg.setPurged(true);
+            }
+        }
+        refreshListAndMessages();
+    }
+
+    /**
      * Used to purge messages from chat whenever a user is timed-out or banned by a Twitch moderator
      * 
      * @param username

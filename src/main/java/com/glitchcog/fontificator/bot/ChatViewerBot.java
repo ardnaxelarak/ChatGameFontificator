@@ -322,6 +322,12 @@ public class ChatViewerBot extends PircBot
                             log("CTCP message missing command type: " + message);
                         }
                     }
+                    else if (privmsg.getMessageClassification().equals("CLEARCHAT")) {
+                        chat.purgeMessagesForUser(message, "TWITCH CLEARCHAT");
+                    }
+                    else if (privmsg.getMessageClassification().equals("CLEARMSG")) {
+                        chat.purgeMessageId(privmsg.getRawParam("target-msg-id"));
+                    }
                     else if (privmsg.isDisplayMessage())
                     {
                         sendMessageToChat(MessageType.NORMAL, message, privmsg);
@@ -370,6 +376,7 @@ public class ChatViewerBot extends PircBot
         int secondBreak = rawMessage.indexOf(POST_SEPARATOR, firstBreak + POST_SEPARATOR.length());
 
         Map<String, String> paramMap = parseMessageParams(rawMessage, firstBreak, secondBreak);
+        privmsg.setRawParams(paramMap);
 
         String messageClassification = null;
         try
@@ -459,7 +466,7 @@ public class ChatViewerBot extends PircBot
             }
             catch (Exception e)
             {
-                log("Error parsing subscriber value \"" + turboStr + "\" in Twitch header");
+                log("Error parsing turbo value \"" + turboStr + "\" in Twitch header");
             }
         }
         privmsg.setPrime(paramMap.get("badges") != null && paramMap.get("badges").contains("premium"));
@@ -482,7 +489,10 @@ public class ChatViewerBot extends PircBot
 
         if (displayName == null || displayName.trim().isEmpty())
         {
-            privmsg.setDisplayName(prefix.substring(0, prefix.indexOf("!")));
+            int usernameBreak = prefix.indexOf("!");
+            if (usernameBreak >= 0) {
+                privmsg.setDisplayName(prefix.substring(0, usernameBreak));
+            }
         }
 
         return privmsg;

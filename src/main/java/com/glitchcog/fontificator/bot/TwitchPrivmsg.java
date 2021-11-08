@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * A TwitchPrivmsg model to house the data that comes in the header of a Twitch IRC message. Could also be a whisper
  * message, which is specified by the messageClassification member variable.
- * 
+ *
  * @author Matt Yanos
  */
 public class TwitchPrivmsg
@@ -27,6 +27,11 @@ public class TwitchPrivmsg
      * The name to display on the message
      */
     private String displayName;
+
+    /**
+     * The map of raw params
+     */
+    private Map<String, String> rawParams;
 
     /**
      * The list of emotes
@@ -68,7 +73,7 @@ public class TwitchPrivmsg
 
     /**
      * Constructor sets default values for members other than displayName
-     * 
+     *
      * @param displayName
      */
     public TwitchPrivmsg(String displayName)
@@ -92,9 +97,34 @@ public class TwitchPrivmsg
     }
 
     /**
+     * Set raw param map
+     *
+     * @param paramMap
+     */
+    public void setRawParams(Map<String, String> paramMap)
+    {
+        this.rawParams = paramMap;
+    }
+
+    /**
+     * Get a raw param
+     *
+     * @param paramKey
+     *
+     * @return paramValue
+     */
+    public String getRawParam(String paramKey)
+    {
+        if (rawParams == null) {
+            return null;
+        }
+        return rawParams.get(paramKey);
+    }
+
+    /**
      * Get the number of posts for this user this connection session, used to optionally censor first posts that contain
      * URLs in the MessageCensorPanel
-     * 
+     *
      * @return postCount
      */
     public int getPostCount()
@@ -120,7 +150,7 @@ public class TwitchPrivmsg
 
     /**
      * Get the color in which to display the username
-     * 
+     *
      * @return color
      */
     public Color getColor()
@@ -130,7 +160,7 @@ public class TwitchPrivmsg
 
     /**
      * Set the color in which to display the username
-     * 
+     *
      * @param color
      */
     public void setColor(Color color)
@@ -140,7 +170,7 @@ public class TwitchPrivmsg
 
     /**
      * Get the name to display on the message
-     * 
+     *
      * @return displayName
      */
     public String getDisplayName()
@@ -150,7 +180,7 @@ public class TwitchPrivmsg
 
     /**
      * Set the name to display on the message
-     * 
+     *
      * @param displayName
      */
     public void setDisplayName(String displayName)
@@ -160,7 +190,7 @@ public class TwitchPrivmsg
 
     /**
      * Get the map of emotes, keyed off of character index of the message
-     * 
+     *
      * @return
      */
     public Map<Integer, EmoteAndIndices> getEmotes()
@@ -170,7 +200,7 @@ public class TwitchPrivmsg
 
     /**
      * Add to the list of emotes
-     * 
+     *
      * @param emoteSets
      */
     public void addEmote(EmoteAndIndices emoteSet)
@@ -180,7 +210,7 @@ public class TwitchPrivmsg
 
     /**
      * Get whether the user has a Twitch subscription to the channel to which the message is posted
-     * 
+     *
      * @return subscriber
      */
     public boolean isSubscriber()
@@ -190,7 +220,7 @@ public class TwitchPrivmsg
 
     /**
      * Set whether the user has a Twitch subscription to the channel to which the message is posted
-     * 
+     *
      * @param subscriber
      */
     public void setSubscriber(boolean subscriber)
@@ -200,7 +230,7 @@ public class TwitchPrivmsg
 
     /**
      * Get whether the user has a Twitch turbo badge
-     * 
+     *
      * @return turbo
      */
     public boolean isTurbo()
@@ -210,7 +240,7 @@ public class TwitchPrivmsg
 
     /**
      * Set whether the user has a Twitch turbo badge
-     * 
+     *
      * @param turbo
      */
     public void setTurbo(boolean turbo)
@@ -220,7 +250,7 @@ public class TwitchPrivmsg
 
     /**
      * Get whether the user has a Twitch prime badge
-     * 
+     *
      * @return prime
      */
     public boolean isPrime()
@@ -230,7 +260,7 @@ public class TwitchPrivmsg
 
     /**
      * Set whether the user has a Twitch prime badge
-     * 
+     *
      * @param prime
      */
     public void setPrime(boolean prime)
@@ -240,7 +270,7 @@ public class TwitchPrivmsg
 
     /**
      * Get the type of the user, for example channel moderator
-     * 
+     *
      * @return userType
      */
     public UserType getUserType()
@@ -250,7 +280,7 @@ public class TwitchPrivmsg
 
     /**
      * Set the type of the user, for example channel moderator
-     * 
+     *
      * @param userType
      */
     public void setUserType(UserType userType)
@@ -259,8 +289,18 @@ public class TwitchPrivmsg
     }
 
     /**
+     * Get the messageClassification
+     *
+     * @return messageClassification
+     */
+    public String getMessageClassification()
+    {
+        return messageClassification;
+    }
+
+    /**
      * Set the messageClassification
-     * 
+     *
      * @param messageClassification
      */
     public void setMessageClassification(String messageClassification)
@@ -271,7 +311,7 @@ public class TwitchPrivmsg
     /**
      * Get whether the message is a PRIVMSG to be displayed in chat, and specifically not a WHISPER message which should
      * not be shown
-     * 
+     *
      * @return whether the message should be displayed in chat
      */
     public boolean isDisplayMessage()

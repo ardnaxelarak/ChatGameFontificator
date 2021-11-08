@@ -793,6 +793,16 @@ public class ChatPanel extends JPanel implements MouseWheelListener
         censor.purgeMessagesForUser(username, reason);
     }
 
+    /**
+     * Used to purge a specific message from chat when deleted by a Twitch moderator
+     * 
+     * @param messageId
+     */
+    public void purgeMessageId(String messageId)
+    {
+        censor.purgeMessageId(messageId);
+    }
+
     public String getFontGameName()
     {
         return ControlPanelFont.getFontGameName(fontConfig.getFontFilename());

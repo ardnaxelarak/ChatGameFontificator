@@ -23,7 +23,7 @@ import com.glitchcog.fontificator.sprite.SpriteCharacterKey;
 
 /**
  * Anything posted to an IRC channel
- * 
+ *
  * @author Matt Yanos
  */
 public class Message
@@ -137,7 +137,7 @@ public class Message
 
     /**
      * Construct a message specifying the type, username and content, but set the time stamp to the current local time
-     * 
+     *
      * @param type
      *            The type of this message
      * @param rawUsername
@@ -154,7 +154,7 @@ public class Message
 
     /**
      * Construct a message specifying everything
-     * 
+     *
      * @param type
      *            The type of this message
      * @param rawUsername
@@ -181,7 +181,7 @@ public class Message
 
     /**
      * Get whether the message is a join type message
-     * 
+     *
      * @return joinType
      */
     public boolean isJoinType()
@@ -191,7 +191,7 @@ public class Message
 
     /**
      * Get the type of the message
-     * 
+     *
      * @return type
      */
     public MessageType getType()
@@ -201,7 +201,7 @@ public class Message
 
     /**
      * Get the username of the poster, or the username of the user who joined, if the message is a join message
-     * 
+     *
      * @return username
      */
     public String getUsername()
@@ -212,7 +212,7 @@ public class Message
     /**
      * Increment the draw cursor based on the message text as defined by the specified messageConfig and its message
      * speed setting
-     * 
+     *
      * @param messageConfig
      * @param emojiConfig
      */
@@ -245,7 +245,7 @@ public class Message
 
     /**
      * Get message length in characters. Emoji are considered single characters.
-     * 
+     *
      * @param emojiManager
      * @param messageConfig
      * @param emojiConfig
@@ -258,7 +258,7 @@ public class Message
 
     /**
      * Get the draw cursor, or the max draw cursor value if the message is completely drawn
-     * 
+     *
      * @return drawCursor
      */
     public float getDrawCursor()
@@ -270,7 +270,7 @@ public class Message
      * Get whether the message is completely drawn or not. Because the fully displayed message can change, like if the
      * option to show the time stamp is selected on the fly, once any configuration of the message is fully displayed,
      * it should remain fully displayed, even though the draw cursor won't be at the end of the now longer message text.
-     * 
+     *
      * @return completelyDrawn
      */
     public boolean isCompletelyDrawn()
@@ -286,7 +286,7 @@ public class Message
 
     /**
      * Get the time stamp
-     * 
+     *
      * @return timestamp
      */
     public Date getTimestamp()
@@ -296,7 +296,7 @@ public class Message
 
     /**
      * Get the string representation of the time stamp using the
-     * 
+     *
      * @param messageConfig
      * @return timestampString
      */
@@ -307,12 +307,24 @@ public class Message
 
     /**
      * Get the content of the message
-     * 
+     *
      * @return content
      */
     public String getContent()
     {
         return content;
+    }
+
+    /**
+     * Get a raw param from the associated TwitchPrivmsg
+     *
+     * @param paramKey
+     *
+     * @return paramValue
+     */
+    public String getRawParam(String paramKey)
+    {
+        return privmsg.getRawParam(paramKey);
     }
 
     @Override
@@ -323,7 +335,7 @@ public class Message
 
     /**
      * Get the index right after the username based on the specified messageConfig
-     * 
+     *
      * @param messageConfig
      * @return
      */
@@ -334,7 +346,7 @@ public class Message
 
     /**
      * Get the indexes for when the username starts and right after the username based on the specified messageConfig
-     * 
+     *
      * @param messageConfig
      * @return username index
      */
@@ -371,7 +383,7 @@ public class Message
 
     /**
      * Get the full text of the message to display based on the specified messageConfig
-     * 
+     *
      * @param emojiManager
      * @param messageConfig
      * @param emojiConfig
@@ -394,7 +406,7 @@ public class Message
 
     /**
      * Get whether the configuration has changed
-     * 
+     *
      * @param messageConfig
      * @param emojiConfig
      * @return changed
@@ -410,7 +422,7 @@ public class Message
      * Compile the array of SpriteCharacterKeys using the specified configuration. This can be a bit memory intensive
      * since each character is a new albeit small object, so this should not be done many times a second, rather only if
      * something has changed in the configuration to warrant a re-translation.
-     * 
+     *
      * @param emojiManager
      * @param messageConfig
      * @param emojiConfig
@@ -585,7 +597,7 @@ public class Message
     /**
      * Convert the content of the message into the appropriate emoji. Add those emoji and the remaining characters
      * between them to the specified keyList array.
-     * 
+     *
      * @param content
      * @param privmsg
      * @param keyList
@@ -701,7 +713,7 @@ public class Message
 
     /**
      * From https://gist.github.com/heyarny/71c246f2f7fa4d9d10904fb9d5b1fa1d
-     * 
+     *
      * @param unicodeSurrogates
      * @param sep
      * @return codePoint
